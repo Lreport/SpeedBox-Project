@@ -4,7 +4,7 @@ from localizacao import Localizacao
 from pedido import Pedido
 
 class Usuario: 
-    def __init__(self, id_usuario:str, nome:str, email:str, senha:str, telefone:str, endereco:Localizacao, fone:str):
+    def __init__(self, id_usuario:str, nome:str, email:str, senha:str, telefone:str, endereco:Localizacao):
         self.id_usuario = id_usuario
         self.nome = nome
         self.email = email
