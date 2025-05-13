@@ -6,3 +6,6 @@ class Localizacao:
         self.cidade = cidade
         self.estado = estado
         self.cep = cep
+
+    def formato_endereco(self) -> str:
+        return f'Rua: {self.rua}, Numero: {self.numero}, Bairro: {self.bairro}, Cidade: {self.cidade}, Estado: {self.estado}, CEP: {self.cep}'
