@@ -9,26 +9,45 @@ class Entregador(Usuario):
         self.id_entregador = id_entregador
         self.veiculo = veiculo
         self.status_disponibilidade = status_disponibilidade
-        self.entregas_concluidas = list[Pedido] = [] #tentar fazer um banco da dados com isso
+        self.entregas_concluidas = list[Pedido] = []
 
-    def aceitar_encomenda(self, pedido:Pedido) -> bool:
-        if self.status_disponibilidade == 'Disponivel' and pedido.entregador == None:
-            pedido.entregador(self)
+    def __str__(self):
+        return f'Entregador: {self.nome}, ID: {self.id_entregador}, Veículo: {self.veiculo}, Status: {self.status_disponibilidade}'
+
+    def aceitar_pedido(self, pedido:Pedido) -> bool:
+        if self.status_disponibilidade == 'Disponivel' and pedido.entregador is None:
+            pedido.entregador = self
             pedido.atualizar_status('Aguardando Coleta')
             self.status_disponibilidade = 'Em Entrega'
             print(f"Entregador {self.nome} aceitou o pedido {pedido.id_pedido}.")
+            return True
+        else:
+            print(f"Entregador {self.nome} não pode aceitar o pedido {pedido.id_pedido}.")
+            return False
+        
+    def adicionar_historico(self, pedido:Pedido, mensagem:str):
+        if pedido.entregador == self:
+            pedido.adicionar_historico(mensagem)
+            print(f'Historico adicionado ao pedido {pedido.id_pedido} pelo entregador {self.nome}.')
+        else:
+            print(f'Entregador {self.nome} não esta associado ao pedido {pedido.id_pedido}.')
 
     def atualizar_status_entrega(self, pedido:Pedido, novo_status:str, localizacao_atual:Localizacao = None):
         if pedido.entregador == self:
             pedido.atualizar_status(novo_status)
             if localizacao_atual:
-                pedido.adicionar_historico(f"Localização atual do entregador {self.nome}: {localizacao_atual}")
-            print(f"Pedido {pedido.id_pedido} atualizado para: {novo_status} pelo entregador {self.nome}.")
+                pedido.adicionar_historico(f'Localizacao atual do entregador {self.nome}: {localizacao_atual.formatar_endereco()}')
+                print(f'Pedido {pedido.id_pedido} atualizado para {novo_status} pelo entregador {self.nome}')
             if novo_status == 'Entregue':
                 self.status_disponibilidade = 'Disponivel'
                 if pedido not in self.entregas_concluidas:
                     self.entregas_concluidas.append(pedido)
+                    print(f'Pedido {pedido.id_pedido} concluído pelo entregador {self.nome}.')
         else:
-            print(f"Entregador {self.nome} não está atribuído ao pedido {pedido.id_pedido}.")
+            print(f'Entregador {self.nome} não esta associado ao pedido {pedido.id_pedido}.')
+
+
+    def ver_entregas_disponiveis(self):
+        pass
 
 

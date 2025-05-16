@@ -5,6 +5,9 @@ class Transporte:
         self.vel_media_kmh = vel_media_kmh
         self.preco_km = preco_km
 
+    def __str__(self):
+        return f'{self.tipo} - ID:{self.id_transporte}'
+
     def calcular_preco(self, distancia_km:float) -> float:
         if distancia_km <= 0:
             raise ValueError("A distância não pode ser <= que 0.")

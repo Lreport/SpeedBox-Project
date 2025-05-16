@@ -7,5 +7,8 @@ class Localizacao:
         self.estado = estado
         self.cep = cep
 
-    def formato_endereco(self) -> str:
+    def __str__(self):
         return f'Rua: {self.rua}, Numero: {self.numero}, Bairro: {self.bairro}, Cidade: {self.cidade}, Estado: {self.estado}, CEP: {self.cep}'
+    
+    def formatar_endereco(self) -> str:
+        return str(self)
