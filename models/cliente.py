@@ -9,5 +9,11 @@ class Cliente(Usuario):
         self.endereco = endereco
         self.telefone = telefone
 
-    def criar_pedido(self, pedido:Pedido):
-        pass #criar isso a logica de criar/cancelar pedidido e adicionar no historico do cliente
+    def __str__(self):
+        return f'Cliente: {self.nome} (id: {self.id_usuario}, email: {self.email})'
+    
+    def fazer_pedido(self, pedido: Pedido):
+        pass
+
+    def avaliar_entrega(self):
+        
