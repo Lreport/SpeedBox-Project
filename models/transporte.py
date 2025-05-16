@@ -22,23 +22,23 @@ class Transporte:
             self.tempo = distancia_km / self.vel_media_kmh
             return self.tempo
         
-    def transporte_caorro(Transporte):
-        def __init__(self, id_transporte:str, tipo:str, vel_media_kmh:float, preco_km:float):
-            super().__init__(id_transporte, tipo, vel_media_kmh, preco_km)
-            self.tipo = "Carro"
-            self.vel_media_kmh = 40
-            self.preco_km = 1
+class Transportecarro(Transporte):
+    def __init__(self, id_transporte:str, tipo:str, vel_media_kmh:float, preco_km:float):
+        super().__init__(id_transporte, tipo, vel_media_kmh, preco_km)
+        self.tipo = "Carro"
+        self.vel_media_kmh = 40
+        self.preco_km = 1
 
-    def transporte_moto(Transporte):
-        def __init__(self, id_transporte:str, tipo:str, vel_media_kmh:float, preco_km:float):
-            super().__init__(id_transporte, tipo, vel_media_kmh, preco_km)
-            self.tipo = "Moto"
-            self.vel_media_kmh = 50
-            self.preco_km = 0.5
+class Transportemoto(Transporte):
+    def __init__(self, id_transporte:str, tipo:str, vel_media_kmh:float, preco_km:float):
+        super().__init__(id_transporte, tipo, vel_media_kmh, preco_km)
+        self.tipo = "Moto"
+        self.vel_media_kmh = 50
+        self.preco_km = 0.5
 
-    def transporte_bicicleta(Transporte):
-        def __init__(self, id_transporte:str, tipo:str, vel_media_kmh:float, preco_km:float):
-            super().__init__(id_transporte, tipo, vel_media_kmh, preco_km)
-            self.tipo = "Bicicleta"
-            self.vel_media_kmh = 15
-            self.preco_km = 0.2
+class Transportebicicleta(Transporte):
+    def __init__(self, id_transporte:str, tipo:str, vel_media_kmh:float, preco_km:float):
+        super().__init__(id_transporte, tipo, vel_media_kmh, preco_km)
+        self.tipo = "Bicicleta"
+        self.vel_media_kmh = 15
+        self.preco_km = 0.2
