@@ -1,12 +1,15 @@
+from typing import TYPE_CHECKING
 import datetime
-from produto import Produto
-from localizacao import Localizacao
-from transporte import Transporte
-from cliente import Cliente
-from entregador import Entregador
+
+if TYPE_CHECKING:
+    from .produto import Produto
+    from .localizacao import Localizacao
+    from .cliente import Cliente
+    from .entregador import Entregador
+    from .transporte import Transporte
 
 class Pedido:
-    def __init__(self, id_pedido:str, cliente:Cliente, produtos:list, endereco_final:Localizacao, endereco_inicial:Localizacao):
+    def __init__(self, id_pedido: str, cliente: "Cliente", produtos: list["Produto"], endereco_final: "Localizacao", endereco_inicial: "Localizacao"):
         self.id_pedido = id_pedido
         self.cliente = cliente
         self.produtos = produtos
@@ -16,7 +19,6 @@ class Pedido:
         self.transporte = None
         self.status = 'Pendente'
         self.datetime_solicitacao = datetime.datetime.now()
-        self.avaliacao = None
 
     def __str__(self):
         return(
@@ -34,23 +36,23 @@ class Pedido:
     def calcular_preco_total(self) -> float:
         return sum(produto.preco for produto in self.produtos)
     
-    def calcular_custo_frete(self, transporte:Transporte, distancia_km:float) -> float:
+    def calcular_custo_frete(self, transporte: "Transporte", distancia_km: float) -> float:
         if not transporte:
             print("Transporte não definido.")
         
         return transporte.calcular_preco(distancia_km)
     
-    def calcular_tempo_entrega(self, transporte:Transporte, distancia_km:float) -> float:
+    def calcular_tempo_entrega(self, transporte: "Transporte", distancia_km: float) -> float:
         if not transporte:
             print("Transporte não definido.")
         
         return transporte.calcular_tempo(distancia_km)
     
-    def atualizar_status(self, status:str):
+    def atualizar_status(self, status: str):
         self.status = status
         print(f"Status do pedido {self.id_pedido} atualizado para: {self.status}")
 
-    def avaliar_entrega(self, nota:int, comentario:str):
+    def avaliar_entrega(self, nota: int, comentario: str):
         self.avaliacao = {
             'nota': nota,
             'comentario': comentario

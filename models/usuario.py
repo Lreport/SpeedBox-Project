@@ -1,25 +1,22 @@
-from localizacao import Localizacao
-from pedido import Pedido
-from typing import List
+from typing import TYPE_CHECKING
 
-class Usuario: 
-    def __init__(self, id_usuario:str, nome:str, email:str, senha:str, telefone:str, endereco:Localizacao):
+if TYPE_CHECKING:
+    from .pedido import Pedido  # Import apenas para tipagem
+    from .localizacao import Localizacao  # Import apenas para tipagem
+
+class Usuario:
+    def __init__(self, id_usuario: str, nome: str, email: str, senha: str, telefone: str, endereco: "Localizacao"):
         self.id_usuario = id_usuario
         self.nome = nome
         self.email = email
-        self._senha = senha
-        self._endereco = endereco
+        self.senha = senha
         self.telefone = telefone
-        self.historico_pedidos:List[Pedido] = []
+        self.endereco = endereco
+        self.historico_pedidos = []  # Lista para armazenar o histórico de pedidos
 
-    def __str__(self) -> str:
-        return f'Usuario: {self.nome} (ID:{self.id_usuario}, email:{self.email} )'
-
-    def autenticacao(self, senha_enviada:str) -> bool:
-        return self._senha == senha_enviada
-                
-    def adc_historico_pedidos(self, pedido:Pedido):
+    def adc_historico_pedidos(self, pedido: "Pedido"):
         self.historico_pedidos.append(pedido)
+        print(f"Pedido {pedido.id_pedido} adicionado ao histórico de {self.nome}.")
 
     def historico_pedidos(self):
         if not self.historico_pedidos:

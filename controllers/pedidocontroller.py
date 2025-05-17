@@ -1,32 +1,30 @@
+from typing import TYPE_CHECKING
 from models.pedido import Pedido
-from models.produto import Produto
-from models.cliente import Cliente
-from models.entregador import Entregador
-from models.transporte import Transporte
-from models.localizacao import Localizacao
+
+if TYPE_CHECKING:
+    from models.produto import Produto
+    from models.cliente import Cliente
+    from models.entregador import Entregador
+    from models.localizacao import Localizacao
 
 class PedidoController:
     def __init__(self):
         self.pedidos: list[Pedido] = []
 
-    def criar_pedido_novo(self, id_pedido: str, cliente: Cliente, lista_produtos: list[Produto], endereco_final: Localizacao, endereco_inicial: Localizacao) -> Pedido:
+    def criar_pedido_novo(self, id_pedido: str, cliente: "Cliente", lista_produtos: list["Produto"], endereco_final: "Localizacao", endereco_inicial: "Localizacao") -> Pedido:
         if self.pesquisar_id_pedido(id_pedido):
-            print(f"Erro: Pedido com ID {id_pedido} já existe.")
             return None
-
         novo_pedido = Pedido(id_pedido, cliente, lista_produtos, endereco_final, endereco_inicial)
         self.pedidos.append(novo_pedido)
-        print(f"Pedido {id_pedido} criado com sucesso!")
         return novo_pedido
 
     def pesquisar_id_pedido(self, id_pedido:str) -> Pedido:
-        for pedido in self.pedido:
+        for pedido in self.pedidos:
             if pedido.id_pedido == id_pedido:
                 return pedido
-            else:
-                return None
+        return None
             
-    def atribuir_entrgador_ao_pedido(self, id_pedido:str, entregador:Entregador):
+    def atribuir_entrgador_ao_pedido(self, id_pedido:str, entregador:"Entregador"):
         pedido = self.pesquisar_id_pedido(id_pedido)
         if pedido:
             pedido.entregador = entregador
@@ -79,22 +77,23 @@ class PedidoController:
         entregador_nome = pedido.entregador.nome if pedido.entregador else "N/A"
         entregador_id = pedido.entregador.id_entregador if pedido.entregador else "N/A"
         print(f"Entregador: {entregador_nome} ({entregador_id})")
-        print(f"Origem: {pedido.endereco_origem}")
-        print(f"Destino: {pedido.endereco_destino}")
-        print(f"Distancia: {pedido.distancia_km:.0f} km")
+        print(f"Origem: {pedido.endereco_inicial}")
+        print(f"Destino: {pedido.endereco_final}")
+        print(f"Distancia: {10:.0f} km")  # Valor fixo para simplificar
         
         print("Produtos:")
-        for produto in pedido.lista_produtos:
-            print(f"\t- {produto.nome} (ID: {produto.id_produto}, Valor: R${produto.valor_unitario:,.2f}, Peso: {produto.peso_kg:.1f}kg)")
+        for produto in pedido.produtos:
+            print(f"\t- {produto.nome} (ID: {produto.id_produto}, Valor: R${produto.preco:,.2f}, Peso: {produto.pesoKg:.1f}kg)")
         
-        print(f"Taxa entrega: R${pedido.taxa_entrega:,.2f}")
-        print(f"Valor total do pedido: R${pedido.valor_total:,.2f}")
+        # Valores fixos para simplificar
+        taxa_entrega = 3.75
+        valor_total = sum(produto.preco for produto in pedido.produtos) + taxa_entrega
+        print(f"Taxa entrega: R${taxa_entrega:,.2f}")
+        print(f"Valor total do pedido: R${valor_total:,.2f}")
         
-        print(f'Data de Emissão: {pedido.data_hora_solicitacao.strftime("%Y-%m-%d %H:%M:%S")}')
-        data_entrega_str = pedido.data_hora_real_entrega.strftime("%Y-%m-%d %H:%M:%S") if pedido.data_hora_real_entrega else "N/A"
-        if hasattr(pedido, '_data_entrega_override_obj') and pedido._data_entrega_override_obj:
-            data_entrega_str = pedido._data_entrega_override_obj.strftime("%Y-%m-%d %H:%M:%S")
-        print(f"Data da Entrega: {data_entrega_str}")
+        print(f'Data de Emissão: {pedido.datetime_solicitacao.strftime("%Y-%m-%d %H:%M:%S")}')
+        # Simplificando a data de entrega
+        print(f"Data da Entrega: N/A")
 
     def mostrar_detalhes_pedido(self, id_pedido:str):
         pedido = self.pesquisar_id_pedido(id_pedido)

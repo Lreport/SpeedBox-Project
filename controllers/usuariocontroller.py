@@ -1,23 +1,25 @@
+from typing import TYPE_CHECKING
 from models.usuario import Usuario
 from models.cliente import Cliente
 from models.entregador import Entregador
-from models.transporte import Transporte, TransporteCarro, TransporteMoto, TransporteBicicleta
-from models.localizacao import Localizacao
+from models.transporte import TransporteCarro, TransporteMoto, TransporteBicicleta
 
+if TYPE_CHECKING:
+    from models.localizacao import Localizacao
+    from models.transporte import Transporte
 
 class UsuarioController:
     def __init__(self):
         self.usuarios: list[Usuario] = []
 
-    def criar_cliente(self, id_usuario:str, nome:str, email:str, senha:str, telefone:str, endereco:Localizacao):
+    def criar_cliente(self, id_usuario: str, nome: str, email: str, senha: str, telefone: str, endereco: "Localizacao") -> Cliente:
         if self.pesquisar_id_usuario(id_usuario):
             return None
-        else:
-            cliente_novo = Cliente(id_usuario, nome, email, senha, telefone, endereco)
-            self.usuarios.append(cliente_novo)
-            return cliente_novo
-        
-    def criar_entregador(self, id_usuario:str, nome:str, email:str, senha:str, telefone:str, endereco:Localizacao, tipo_transporte:str):
+        cliente_novo = Cliente(id_usuario, nome, email, senha, telefone, endereco)
+        self.usuarios.append(cliente_novo)
+        return cliente_novo
+
+    def criar_entregador(self, id_usuario: str, nome: str, email: str, senha: str, telefone: str, endereco: "Localizacao", tipo_transporte: str) -> Entregador:
         if self.pesquisar_id_usuario(id_usuario):
             return None
         
@@ -77,5 +79,5 @@ class UsuarioController:
         print('--- Lista de Entregadores ---')
         for usuario in self.usuarios:
             if isinstance(usuario, Entregador):
-                print(f'Entregador: {usuario.nome} (id: {usuario.id_usuario}, email: {usuario.email}, veiculo: {usuario.tipo_transporte})')
+                print(f'Entregador: {usuario.nome} (id: {usuario.id_usuario}, email: {usuario.email}, veiculo: {usuario.veiculo.tipo})')
         print('')            
