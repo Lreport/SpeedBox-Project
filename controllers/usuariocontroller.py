@@ -63,22 +63,19 @@ class UsuarioController:
             if isinstance(usuario, Cliente):
                 print(f'Cliente: {usuario.nome} (id: {usuario.id_usuario}, email: {usuario.email})')
             elif isinstance(usuario, Entregador):
-                print(f'Entregador: {usuario.nome} (id: {usuario.id_usuario}, email: {usuario.email})')
-    
-    print('')
+                print(f'Entregador: {usuario.nome} (id: {usuario.id_usuario}, email: {usuario.email})')        
+        print('')
 
     def lista_cliente(self):
         print('--- Lista de Clientes ---')
         for usuario in self.usuarios:
             if isinstance(usuario, Cliente):
                 print(f'Cliente: {usuario.nome} (id: {usuario.id_usuario}, email: {usuario.email})')
-
-    print('')
+        print('')
 
     def lista_entregador(self):
         print('--- Lista de Entregadores ---')
         for usuario in self.usuarios:
             if isinstance(usuario, Entregador):
                 print(f'Entregador: {usuario.nome} (id: {usuario.id_usuario}, email: {usuario.email}, veiculo: {usuario.tipo_transporte})')
-
-    print('')            
+        print('')            
