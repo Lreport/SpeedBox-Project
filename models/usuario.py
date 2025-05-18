@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .pedido import Pedido  # Import apenas para tipagem
-    from .localizacao import Localizacao  # Import apenas para tipagem
-
+    from .pedido import Pedido  
+    from .localizacao import Localizacao 
 class Usuario:
     def __init__(self, id_usuario: str, nome: str, email: str, senha: str, telefone: str, endereco: "Localizacao"):
         self.id_usuario = id_usuario
@@ -12,7 +11,7 @@ class Usuario:
         self.senha = senha
         self.telefone = telefone
         self.endereco = endereco
-        self.historico_pedidos = []  # Lista para armazenar o histórico de pedidos
+        self.historico_pedidos = []  
 
     def adc_historico_pedidos(self, pedido: "Pedido"):
         self.historico_pedidos.append(pedido)

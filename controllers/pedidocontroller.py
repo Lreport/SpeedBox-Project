@@ -79,20 +79,19 @@ class PedidoController:
         print(f"Entregador: {entregador_nome} ({entregador_id})")
         print(f"Origem: {pedido.endereco_inicial}")
         print(f"Destino: {pedido.endereco_final}")
-        print(f"Distancia: {10:.0f} km")  # Valor fixo para simplificar
+        print(f"Distancia: {10:.0f} km") 
         
         print("Produtos:")
         for produto in pedido.produtos:
             print(f"\t- {produto.nome} (ID: {produto.id_produto}, Valor: R${produto.preco:,.2f}, Peso: {produto.pesoKg:.1f}kg)")
         
-        # Valores fixos para simplificar
         taxa_entrega = 3.75
         valor_total = sum(produto.preco for produto in pedido.produtos) + taxa_entrega
         print(f"Taxa entrega: R${taxa_entrega:,.2f}")
         print(f"Valor total do pedido: R${valor_total:,.2f}")
         
         print(f'Data de Emissão: {pedido.datetime_solicitacao.strftime("%Y-%m-%d %H:%M:%S")}')
-        # Simplificando a data de entrega
+
         print(f"Data da Entrega: N/A")
 
     def mostrar_detalhes_pedido(self, id_pedido:str):
