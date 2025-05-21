@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from .transporte import Transporte
 
 class Pedido:
-    def __init__(self, id_pedido: str, cliente: "Cliente", produtos: list["Produto"], endereco_final: "Localizacao", endereco_inicial: "Localizacao"):
+    def __init__(self, id_pedido: str, cliente: 'Cliente', produtos: list['Produto'], endereco_final: 'Localizacao', endereco_inicial: 'Localizacao'):
         self.id_pedido = id_pedido
         self.cliente = cliente
         self.produtos = produtos
@@ -28,33 +28,33 @@ class Pedido:
             f'Endereço inicial: {self.endereco_inicial.formatar_endereco()}\n'
             f'Endereço final: {self.endereco_final.formatar_endereco()}\n'
             f'Produtos:\n' + '\n'.join(str(produto) for produto in self.produtos) + '\n'
-            f'Entregador: {self.entregador.nome if self.entregador else "Não atribuído"}\n'
+            f'Entregador: {self.entregador.nome if self.entregador else 'Não atribuído'}\n'
             f'status: {self.status}\n'
-            f'Data e hora da solicitação: {self.datetime_solicitacao.strftime("%d/%m/%Y %H:%M:%S")}\n'
+            f'Data e hora da solicitação: {self.datetime_solicitacao.strftime('%d/%m/%Y %H:%M:%S')}\n'
         )
 
     def calcular_preco_total(self) -> float:
         return sum(produto.preco for produto in self.produtos)
     
-    def calcular_custo_frete(self, transporte: "Transporte", distancia_km: float) -> float:
+    def calcular_custo_frete(self, transporte: 'Transporte', distancia_km: float) -> float:
         if not transporte:
-            print("Transporte não definido.")
+            print('Transporte não definido.')
         
         return transporte.calcular_preco(distancia_km)
     
-    def calcular_tempo_entrega(self, transporte: "Transporte", distancia_km: float) -> float:
+    def calcular_tempo_entrega(self, transporte: 'Transporte', distancia_km: float) -> float:
         if not transporte:
-            print("Transporte não definido.")
+            print('Transporte não definido.')
         
         return transporte.calcular_tempo(distancia_km)
     
     def atualizar_status(self, status: str):
         self.status = status
-        print(f"Status do pedido {self.id_pedido} atualizado para: {self.status}")
+        print(f'Status do pedido {self.id_pedido} atualizado para: {self.status}')
 
     def avaliar_entrega(self, nota: int, comentario: str):
         self.avaliacao = {
             'nota': nota,
             'comentario': comentario
         }
-        print(f"Pedido {self.id_pedido} avaliado com nota {nota} e comentário: {comentario}")
+        print(f'Pedido {self.id_pedido} avaliado com nota {nota} e comentário: {comentario}')
